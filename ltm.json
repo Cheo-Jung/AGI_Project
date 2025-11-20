@@ -1,0 +1,265 @@
+[
+  {
+    "content": "사과",
+    "emotion_score": 0.0,
+    "timestamp": 1761438284.112391,
+    "metadata": {
+      "emotion_keywords": []
+    }
+  },
+  {
+    "content": "기뻤어",
+    "emotion_score": 0.9,
+    "timestamp": 1761438284.124394,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "기뻤어",
+          0.9
+        ]
+      ]
+    }
+  },
+  {
+    "content": "기뻤어",
+    "emotion_score": 0.9,
+    "timestamp": 1761438284.124394,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "기뻤어",
+          0.9
+        ]
+      ]
+    }
+  },
+  {
+    "content": "나는",
+    "emotion_score": 0.0,
+    "timestamp": 1761438284.1363585,
+    "metadata": {
+      "emotion_keywords": []
+    }
+  },
+  {
+    "content": "오늘",
+    "emotion_score": 0.0,
+    "timestamp": 1761438284.1363585,
+    "metadata": {
+      "emotion_keywords": []
+    }
+  },
+  {
+    "content": "사과를",
+    "emotion_score": 0.0,
+    "timestamp": 1761438284.1363585,
+    "metadata": {
+      "emotion_keywords": []
+    }
+  },
+  {
+    "content": "먹었어.",
+    "emotion_score": 0.0,
+    "timestamp": 1761438284.1363585,
+    "metadata": {
+      "emotion_keywords": []
+    }
+  },
+  {
+    "content": "맛있었어!",
+    "emotion_score": 0.77,
+    "timestamp": 1761438284.1363585,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "맛있",
+          0.7
+        ]
+      ]
+    }
+  },
+  {
+    "content": "맛있었어!",
+    "emotion_score": 0.77,
+    "timestamp": 1761438284.1363585,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "맛있",
+          0.7
+        ]
+      ]
+    }
+  },
+  {
+    "content": "비가",
+    "emotion_score": 0.0,
+    "timestamp": 1761438284.1473749,
+    "metadata": {
+      "emotion_keywords": []
+    }
+  },
+  {
+    "content": "와서",
+    "emotion_score": 0.0,
+    "timestamp": 1761438284.1483676,
+    "metadata": {
+      "emotion_keywords": []
+    }
+  },
+  {
+    "content": "우울했어?",
+    "emotion_score": -0.8,
+    "timestamp": 1761438284.1483676,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "우울",
+          -0.8
+        ]
+      ]
+    }
+  },
+  {
+    "content": "짜증나…",
+    "emotion_score": -0.8,
+    "timestamp": 1761438284.1483676,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "짜증",
+          -0.8
+        ]
+      ]
+    }
+  },
+  {
+    "content": "여행",
+    "emotion_score": 0.0,
+    "timestamp": 1761438284.1603627,
+    "metadata": {
+      "emotion_keywords": []
+    }
+  },
+  {
+    "content": "행복",
+    "emotion_score": 0.9,
+    "timestamp": 1761438284.1603627,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "행복",
+          0.9
+        ]
+      ]
+    }
+  },
+  {
+    "content": "행복",
+    "emotion_score": 0.9,
+    "timestamp": 1761438284.1603627,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "행복",
+          0.9
+        ]
+      ]
+    }
+  },
+  {
+    "content": "친구와",
+    "emotion_score": 0.0,
+    "timestamp": 1761438284.1603627,
+    "metadata": {
+      "emotion_keywords": []
+    }
+  },
+  {
+    "content": "화해",
+    "emotion_score": 0.0,
+    "timestamp": 1761438284.1613967,
+    "metadata": {
+      "emotion_keywords": []
+    }
+  },
+  {
+    "content": "i",
+    "emotion_score": 0.0,
+    "timestamp": 1761438284.1733613,
+    "metadata": {
+      "emotion_keywords": []
+    }
+  },
+  {
+    "content": "enjoyed",
+    "emotion_score": 0.7,
+    "timestamp": 1761438284.1743617,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "enjoy",
+          0.7
+        ]
+      ]
+    }
+  },
+  {
+    "content": "the",
+    "emotion_score": 0.0,
+    "timestamp": 1761438284.1743617,
+    "metadata": {
+      "emotion_keywords": []
+    }
+  },
+  {
+    "content": "walk",
+    "emotion_score": 0.0,
+    "timestamp": 1761438284.1753676,
+    "metadata": {
+      "emotion_keywords": []
+    }
+  },
+  {
+    "content": "and",
+    "emotion_score": 0.0,
+    "timestamp": 1761438284.1753676,
+    "metadata": {
+      "emotion_keywords": []
+    }
+  },
+  {
+    "content": "felt",
+    "emotion_score": 0.0,
+    "timestamp": 1761438284.176366,
+    "metadata": {
+      "emotion_keywords": []
+    }
+  },
+  {
+    "content": "happy.",
+    "emotion_score": 0.9,
+    "timestamp": 1761438284.176366,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "happy",
+          0.9
+        ]
+      ]
+    }
+  },
+  {
+    "content": "happy.",
+    "emotion_score": 0.9,
+    "timestamp": 1761438284.176366,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "happy",
+          0.9
+        ]
+      ]
+    }
+  }
+]
