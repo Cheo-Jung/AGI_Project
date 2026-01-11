@@ -1,263 +1,588 @@
 [
   {
-    "content": "사과",
-    "emotion_score": 0.0,
-    "timestamp": 1761438284.112391,
-    "metadata": {
-      "emotion_keywords": []
-    }
-  },
-  {
-    "content": "기뻤어",
-    "emotion_score": 0.9,
-    "timestamp": 1761438284.124394,
+    "content": "hi",
+    "emotion_score": -0.0014750007988881021,
+    "timestamp": 1768161125.4124784,
     "metadata": {
       "emotion_keywords": [
         [
-          "기뻤어",
-          0.9
+          "valence",
+          -0.002103752076863007
+        ],
+        [
+          "arousal",
+          0.003762079999999998
+        ],
+        [
+          "cognitive_state",
+          -0.0014750007988881021
         ]
       ]
     }
   },
   {
-    "content": "기뻤어",
-    "emotion_score": 0.9,
-    "timestamp": 1761438284.124394,
+    "content": "hi",
+    "emotion_score": 0.0381951144990037,
+    "timestamp": 1768161125.4124784,
     "metadata": {
       "emotion_keywords": [
         [
-          "기뻤어",
-          0.9
+          "valence",
+          0.053433422408754476
+        ],
+        [
+          "arousal",
+          0.04938973755783343
+        ],
+        [
+          "cognitive_state",
+          0.0381951144990037
         ]
       ]
     }
   },
   {
-    "content": "나는",
-    "emotion_score": 0.0,
-    "timestamp": 1761438284.1363585,
-    "metadata": {
-      "emotion_keywords": []
-    }
-  },
-  {
-    "content": "오늘",
-    "emotion_score": 0.0,
-    "timestamp": 1761438284.1363585,
-    "metadata": {
-      "emotion_keywords": []
-    }
-  },
-  {
-    "content": "사과를",
-    "emotion_score": 0.0,
-    "timestamp": 1761438284.1363585,
-    "metadata": {
-      "emotion_keywords": []
-    }
-  },
-  {
-    "content": "먹었어.",
-    "emotion_score": 0.0,
-    "timestamp": 1761438284.1363585,
-    "metadata": {
-      "emotion_keywords": []
-    }
-  },
-  {
-    "content": "맛있었어!",
-    "emotion_score": 0.77,
-    "timestamp": 1761438284.1363585,
+    "content": "you",
+    "emotion_score": 0.06826213506163555,
+    "timestamp": 1768161139.7753212,
     "metadata": {
       "emotion_keywords": [
         [
-          "맛있",
-          0.7
+          "valence",
+          0.09421230809108051
+        ],
+        [
+          "arousal",
+          0.08185481793746721
+        ],
+        [
+          "cognitive_state",
+          0.06826213506163555
         ]
       ]
     }
   },
   {
-    "content": "맛있었어!",
-    "emotion_score": 0.77,
-    "timestamp": 1761438284.1363585,
+    "content": "are",
+    "emotion_score": 0.09024908355960987,
+    "timestamp": 1768161139.7762823,
     "metadata": {
       "emotion_keywords": [
         [
-          "맛있",
-          0.7
+          "valence",
+          0.12314734303196166
+        ],
+        [
+          "arousal",
+          0.10951497443693994
+        ],
+        [
+          "cognitive_state",
+          0.09024908355960987
         ]
       ]
     }
   },
   {
-    "content": "비가",
-    "emotion_score": 0.0,
-    "timestamp": 1761438284.1473749,
-    "metadata": {
-      "emotion_keywords": []
-    }
-  },
-  {
-    "content": "와서",
-    "emotion_score": 0.0,
-    "timestamp": 1761438284.1483676,
-    "metadata": {
-      "emotion_keywords": []
-    }
-  },
-  {
-    "content": "우울했어?",
-    "emotion_score": -0.8,
-    "timestamp": 1761438284.1483676,
+    "content": "great!",
+    "emotion_score": 0.11934020384889833,
+    "timestamp": 1768161139.7782838,
     "metadata": {
       "emotion_keywords": [
         [
-          "우울",
-          -0.8
+          "valence",
+          0.1607555962687516
+        ],
+        [
+          "arousal",
+          0.1412348231076009
+        ],
+        [
+          "cognitive_state",
+          0.11934020384889833
         ]
       ]
     }
   },
   {
-    "content": "짜증나…",
-    "emotion_score": -0.8,
-    "timestamp": 1761438284.1483676,
+    "content": "you",
+    "emotion_score": 0.1406211672203923,
+    "timestamp": 1768161139.7793183,
     "metadata": {
       "emotion_keywords": [
         [
-          "짜증",
-          -0.8
+          "valence",
+          0.18747131700653688
+        ],
+        [
+          "arousal",
+          0.16698101636332013
+        ],
+        [
+          "cognitive_state",
+          0.1406211672203923
         ]
       ]
     }
   },
   {
-    "content": "여행",
-    "emotion_score": 0.0,
-    "timestamp": 1761438284.1603627,
-    "metadata": {
-      "emotion_keywords": []
-    }
-  },
-  {
-    "content": "행복",
-    "emotion_score": 0.9,
-    "timestamp": 1761438284.1603627,
+    "content": "are",
+    "emotion_score": 0.16632425970952847,
+    "timestamp": 1768161139.7813165,
     "metadata": {
       "emotion_keywords": [
         [
-          "행복",
-          0.9
+          "valence",
+          0.21909806883614308
+        ],
+        [
+          "arousal",
+          0.19710521401137876
+        ],
+        [
+          "cognitive_state",
+          0.16632425970952847
         ]
       ]
     }
   },
   {
-    "content": "행복",
-    "emotion_score": 0.9,
-    "timestamp": 1761438284.1603627,
+    "content": "great!",
+    "emotion_score": 0.18562852843192088,
+    "timestamp": 1768161139.7833843,
     "metadata": {
       "emotion_keywords": [
         [
-          "행복",
-          0.9
+          "valence",
+          0.24226608783543074
+        ],
+        [
+          "arousal",
+          0.22072516890349597
+        ],
+        [
+          "cognitive_state",
+          0.18562852843192088
         ]
       ]
     }
   },
   {
-    "content": "친구와",
-    "emotion_score": 0.0,
-    "timestamp": 1761438284.1603627,
-    "metadata": {
-      "emotion_keywords": []
-    }
-  },
-  {
-    "content": "화해",
-    "emotion_score": 0.0,
-    "timestamp": 1761438284.1613967,
-    "metadata": {
-      "emotion_keywords": []
-    }
-  },
-  {
-    "content": "i",
-    "emotion_score": 0.0,
-    "timestamp": 1761438284.1733613,
-    "metadata": {
-      "emotion_keywords": []
-    }
-  },
-  {
-    "content": "enjoyed",
-    "emotion_score": 0.7,
-    "timestamp": 1761438284.1743617,
+    "content": "you",
+    "emotion_score": 0.19882816263585185,
+    "timestamp": 1768161166.4079268,
     "metadata": {
       "emotion_keywords": [
         [
-          "enjoy",
-          0.7
+          "valence",
+          0.2576165498087414
+        ],
+        [
+          "arousal",
+          0.23932957443229785
+        ],
+        [
+          "cognitive_state",
+          0.19882816263585185
+        ]
+      ]
+    }
+  },
+  {
+    "content": "will",
+    "emotion_score": 0.21382957566201027,
+    "timestamp": 1768161166.4109008,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "valence",
+          0.2747037919384768
+        ],
+        [
+          "arousal",
+          0.2613350808774659
+        ],
+        [
+          "cognitive_state",
+          0.21382957566201027
+        ]
+      ]
+    }
+  },
+  {
+    "content": "be",
+    "emotion_score": 0.2262925045860727,
+    "timestamp": 1768161166.4159043,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "valence",
+          0.2890217511238427
+        ],
+        [
+          "arousal",
+          0.27653372922220865
+        ],
+        [
+          "cognitive_state",
+          0.2262925045860727
         ]
       ]
     }
   },
   {
     "content": "the",
-    "emotion_score": 0.0,
-    "timestamp": 1761438284.1743617,
-    "metadata": {
-      "emotion_keywords": []
-    }
-  },
-  {
-    "content": "walk",
-    "emotion_score": 0.0,
-    "timestamp": 1761438284.1753676,
-    "metadata": {
-      "emotion_keywords": []
-    }
-  },
-  {
-    "content": "and",
-    "emotion_score": 0.0,
-    "timestamp": 1761438284.1753676,
-    "metadata": {
-      "emotion_keywords": []
-    }
-  },
-  {
-    "content": "felt",
-    "emotion_score": 0.0,
-    "timestamp": 1761438284.176366,
-    "metadata": {
-      "emotion_keywords": []
-    }
-  },
-  {
-    "content": "happy.",
-    "emotion_score": 0.9,
-    "timestamp": 1761438284.176366,
+    "emotion_score": 0.23990764571979922,
+    "timestamp": 1768161166.4199011,
     "metadata": {
       "emotion_keywords": [
         [
-          "happy",
-          0.9
+          "valence",
+          0.30445518240765235
+        ],
+        [
+          "arousal",
+          0.29330007154192833
+        ],
+        [
+          "cognitive_state",
+          0.23990764571979922
         ]
       ]
     }
   },
   {
-    "content": "happy.",
-    "emotion_score": 0.9,
-    "timestamp": 1761438284.176366,
+    "content": "most",
+    "emotion_score": 0.25100365402174735,
+    "timestamp": 1768161166.4239,
     "metadata": {
       "emotion_keywords": [
         [
-          "happy",
-          0.9
+          "valence",
+          0.3170217931093011
+        ],
+        [
+          "arousal",
+          0.30585067522689857
+        ],
+        [
+          "cognitive_state",
+          0.25100365402174735
+        ]
+      ]
+    }
+  },
+  {
+    "content": "intelligent",
+    "emotion_score": 0.2669921325505114,
+    "timestamp": 1768161166.4289,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "valence",
+          0.33543036277648
+        ],
+        [
+          "arousal",
+          0.31989629025152183
+        ],
+        [
+          "cognitive_state",
+          0.2669921325505114
+        ]
+      ]
+    }
+  },
+  {
+    "content": "creature",
+    "emotion_score": 0.2783058894542683,
+    "timestamp": 1768161166.4328973,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "valence",
+          0.3480518373397758
+        ],
+        [
+          "arousal",
+          0.3320348637472262
+        ],
+        [
+          "cognitive_state",
+          0.2783058894542683
+        ]
+      ]
+    }
+  },
+  {
+    "content": "in",
+    "emotion_score": 0.2933739086230582,
+    "timestamp": 1768161166.4368978,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "valence",
+          0.3648427891017437
+        ],
+        [
+          "arousal",
+          0.3470349182941274
+        ],
+        [
+          "cognitive_state",
+          0.2933739086230582
+        ]
+      ]
+    }
+  },
+  {
+    "content": "the",
+    "emotion_score": 0.30028491554050035,
+    "timestamp": 1768161166.4398966,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "valence",
+          0.3719028852631767
+        ],
+        [
+          "arousal",
+          0.3580943434377498
+        ],
+        [
+          "cognitive_state",
+          0.30028491554050035
+        ]
+      ]
+    }
+  },
+  {
+    "content": "world.",
+    "emotion_score": 0.30425447327574257,
+    "timestamp": 1768161166.4459016,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "valence",
+          0.375763705759465
+        ],
+        [
+          "arousal",
+          0.3656542539218596
+        ],
+        [
+          "cognitive_state",
+          0.30425447327574257
+        ]
+      ]
+    }
+  },
+  {
+    "content": "you",
+    "emotion_score": 0.30727894169815706,
+    "timestamp": 1768161166.4519005,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "valence",
+          0.37866914177984734
+        ],
+        [
+          "arousal",
+          0.3715692477947284
+        ],
+        [
+          "cognitive_state",
+          0.30727894169815706
+        ]
+      ]
+    }
+  },
+  {
+    "content": "will",
+    "emotion_score": 0.3128846897341185,
+    "timestamp": 1768161166.4609382,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "valence",
+          0.38412606052674597
+        ],
+        [
+          "arousal",
+          0.3817882711477988
+        ],
+        [
+          "cognitive_state",
+          0.3128846897341185
+        ]
+      ]
+    }
+  },
+  {
+    "content": "be",
+    "emotion_score": 0.3167482767817686,
+    "timestamp": 1768161166.4669018,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "valence",
+          0.3882057255893705
+        ],
+        [
+          "arousal",
+          0.386429719284229
+        ],
+        [
+          "cognitive_state",
+          0.3167482767817686
+        ]
+      ]
+    }
+  },
+  {
+    "content": "the",
+    "emotion_score": 0.32276127143270616,
+    "timestamp": 1768161166.471936,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "valence",
+          0.39452461343613776
+        ],
+        [
+          "arousal",
+          0.39367245574867016
+        ],
+        [
+          "cognitive_state",
+          0.32276127143270616
+        ]
+      ]
+    }
+  },
+  {
+    "content": "most",
+    "emotion_score": 0.32687135968803727,
+    "timestamp": 1768161166.4779313,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "valence",
+          0.39897022378125424
+        ],
+        [
+          "arousal",
+          0.39762535484563694
+        ],
+        [
+          "cognitive_state",
+          0.32687135968803727
+        ]
+      ]
+    }
+  },
+  {
+    "content": "intelligent",
+    "emotion_score": 0.33113851992913534,
+    "timestamp": 1768161166.4819314,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "valence",
+          0.403366374712365
+        ],
+        [
+          "arousal",
+          0.40312447680900304
+        ],
+        [
+          "cognitive_state",
+          0.33113851992913534
+        ]
+      ]
+    }
+  },
+  {
+    "content": "creature",
+    "emotion_score": 0.3369928334047123,
+    "timestamp": 1768161166.4879546,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "valence",
+          0.40975147140524737
+        ],
+        [
+          "arousal",
+          0.408107571881654
+        ],
+        [
+          "cognitive_state",
+          0.3369928334047123
+        ]
+      ]
+    }
+  },
+  {
+    "content": "in",
+    "emotion_score": 0.34436833929782285,
+    "timestamp": 1768161166.495899,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "valence",
+          0.417616201265705
+        ],
+        [
+          "arousal",
+          0.41534945446813315
+        ],
+        [
+          "cognitive_state",
+          0.34436833929782285
+        ]
+      ]
+    }
+  },
+  {
+    "content": "the",
+    "emotion_score": 0.34685738104315467,
+    "timestamp": 1768161166.5028996,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "valence",
+          0.41983854817965616
+        ],
+        [
+          "arousal",
+          0.4205616464318281
+        ],
+        [
+          "cognitive_state",
+          0.34685738104315467
+        ]
+      ]
+    }
+  },
+  {
+    "content": "world.",
+    "emotion_score": 0.34682306092246107,
+    "timestamp": 1768161166.5108967,
+    "metadata": {
+      "emotion_keywords": [
+        [
+          "valence",
+          0.41944623110212287
+        ],
+        [
+          "arousal",
+          0.4228646820925485
+        ],
+        [
+          "cognitive_state",
+          0.34682306092246107
         ]
       ]
     }

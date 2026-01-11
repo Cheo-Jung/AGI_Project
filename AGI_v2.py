@@ -554,6 +554,160 @@ class CognitiveAppraisal:
                 self.context_associations = self.context_associations[-100:]
 
 
+class PureCognitiveEmotionEvaluator:
+    """
+    Pure cognitive emotion evaluator - consciousness without physiological simulation.
+    Based on Buddhist philosophy: consciousness can arise from cognitive processes alone,
+    without requiring the six sensory gates or bodily states.
+    
+    - No hard-coded keywords
+    - Pure cognitive appraisal (goal relevance, congruence, coping, novelty)
+    - Emotions emerge directly from cognitive evaluation
+    - No physiological simulation (no heart rate, stress, etc.)
+    - Learns associations through experience
+    """
+    def __init__(self, embedder: Optional[TextEmbedder] = None, 
+                 learning_rate: float = 0.15, debug: bool = False):
+        self.embedder = embedder or _default_embedder
+        self.appraisal = CognitiveAppraisal(embedder=self.embedder)
+        self.learning_rate = learning_rate
+        self.debug = debug
+        # Emotion history for temporal dynamics
+        self.emotion_history: deque = deque(maxlen=20)
+        # Current cognitive state (valence, arousal) - no physiology
+        self.current_valence: float = 0.0
+        self.current_arousal: float = 0.0
+    
+    def enable_debug(self, flag: bool = True):
+        self.debug = bool(flag)
+    
+    def evaluate(self, text: str) -> Tuple[float, List[Tuple[str, float]]]:
+        """
+        Evaluate emotion from text using pure cognitive appraisal.
+        No physiological simulation - consciousness emerges from cognition alone.
+        Returns: (emotion_score, detail_list) compatible with old interface
+        """
+        # Pure cognitive appraisal (no physiological state needed)
+        valence, arousal = self.appraisal.appraise(text, previous_state=None)
+        
+        # Update cognitive state with decay (temporal continuity)
+        decay = 0.92
+        self.current_valence = self.current_valence * decay + valence * (1 - decay)
+        self.current_arousal = self.current_arousal * decay + arousal * (1 - decay)
+        self.current_valence = max(-1.0, min(1.0, self.current_valence))
+        self.current_arousal = max(0.0, min(1.0, self.current_arousal))
+        
+        # Emotion emerges directly from cognitive state
+        emotion_score = self.current_valence * (0.7 + 0.3 * self.current_arousal)
+        
+        # Store in history
+        self.emotion_history.append({
+            "valence": valence,
+            "arousal": arousal,
+            "emotion_score": emotion_score,
+            "text": text[:50],
+            "timestamp": now()
+        })
+        
+        # Create detail list (for compatibility)
+        detail = [
+            ("valence", self.current_valence),
+            ("arousal", self.current_arousal),
+            ("cognitive_state", emotion_score),
+        ]
+        
+        if self.debug:
+            print(f"[CognitiveEmotion] text='{text[:40]}...' -> valence={valence:+.2f}, "
+                  f"arousal={arousal:.2f}, score={emotion_score:+.2f}")
+        
+        return emotion_score, detail
+    
+    def learn(self, text: str, target_valence: float) -> Dict[str, float]:
+        """
+        Learn from feedback (compatible with old interface).
+        target_valence: desired emotion score in [-1, 1]
+        """
+        # Convert emotion score to (valence, arousal)
+        target_arousal = 0.5 + abs(target_valence) * 0.3
+        
+        # Learn the association (pure cognitive)
+        self.appraisal.learn(text, target_valence, target_arousal)
+        
+        if self.debug:
+            print(f"[CognitiveEmotion.learn] learned: '{text[:40]}...' -> "
+                  f"valence={target_valence:+.2f}, arousal={target_arousal:.2f}")
+        
+        return {"valence": target_valence, "arousal": target_arousal}
+    
+    def get_emotion_label(self) -> str:
+        """Get emotion label from cognitive state."""
+        v, a = self.current_valence, self.current_arousal
+        # Map to emotion labels (Circumplex Model)
+        if a > 0.7:
+            if v > 0.5:
+                return "excited"
+            elif v < -0.5:
+                return "angry"
+            else:
+                return "alert"
+        elif a < 0.3:
+            if v > 0.5:
+                return "content"
+            elif v < -0.5:
+                return "sad"
+            else:
+                return "calm"
+        else:
+            if v > 0.5:
+                return "happy"
+            elif v < -0.5:
+                return "upset"
+            else:
+                return "neutral"
+    
+    # ---- persistence (compatible interface) ----
+    def save_lexicon(self, path: str):
+        """Save learned associations (compatible with old interface)."""
+        import json
+        data = {
+            "associations": [
+                {"embedding": emb, "valence": val, "arousal": aro}
+                for emb, (val, aro) in self.appraisal.context_associations
+            ],
+            "cognitive_state": {
+                "valence": self.current_valence,
+                "arousal": self.current_arousal,
+            },
+        }
+        with open(path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=2)
+        if self.debug:
+            print(f"[CognitiveEmotion] saved to {path}")
+    
+    def load_lexicon(self, path: str):
+        """Load learned associations."""
+        import json, os
+        if not os.path.exists(path):
+            if self.debug:
+                print(f"[CognitiveEmotion] load skipped; file not found: {path}")
+            return
+        with open(path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        # Restore associations
+        if "associations" in data:
+            self.appraisal.context_associations = [
+                (item["embedding"], (item["valence"], item["arousal"]))
+                for item in data["associations"]
+            ]
+        # Restore cognitive state if available
+        if "cognitive_state" in data:
+            cs = data["cognitive_state"]
+            self.current_valence = cs.get("valence", 0.0)
+            self.current_arousal = cs.get("arousal", 0.0)
+        if self.debug:
+            print(f"[CognitiveEmotion] loaded from {path}")
+
+
 class PhysiologicallyGroundedEmotionEvaluator:
     """
     Emotion evaluator based on human physiology and consciousness.
@@ -1185,10 +1339,25 @@ class SelfNarrativeBuilder:
     def build(self, memories: List[MemoryItem]) -> str:
         if not memories:
             return "아직 나의 이야기를 구성할 만큼 충분한 기억이 없어."
-        memories = sorted(memories, key=lambda m: m.timestamp)
-        lines = ["나는 다음과 같은 경험을 통해 성장해 왔어:"]
+        
+        # Sort by timestamp and deduplicate by content
+        memories = sorted(memories, key=lambda m: m.timestamp, reverse=True)  # Most recent first
+        seen = set()
+        unique_memories = []
         for m in memories:
-            mood = "긍정적" if m.emotion_score > 0 else "부정적"
+            if m.content not in seen:
+                seen.add(m.content)
+                unique_memories.append(m)
+        
+        # Limit to most recent 5 unique items for conciseness
+        unique_memories = unique_memories[:5]
+        
+        if not unique_memories:
+            return "기억이 아직 부족해요."
+        
+        lines = ["최근 기억:"]
+        for m in unique_memories:
+            mood = "긍정" if m.emotion_score > 0 else "부정"
             lines.append(f"- {m.content} ({mood})")
         return "\n".join(lines)
 
@@ -1414,6 +1583,83 @@ def iter_corpus(path: str) -> Iterable[str]:
                 yield line
 
 
+def load_word_emotion_pairs(path: str) -> List[Tuple[str, float]]:
+    """Load word-emotion pairs from a file.
+    
+    Supports formats:
+    - TSV/CSV: word<TAB>emotion_score or word<COMMA>emotion_score
+    - JSON: list of {"word": str, "emotion": float} objects
+    - JSONL: one JSON object per line with "word" and "emotion" fields
+    
+    Args:
+        path: Path to the file containing word-emotion pairs
+        
+    Returns:
+        List of (word/phrase, emotion_score) tuples where emotion_score ∈ [-1.0, 1.0]
+    """
+    import json
+    pairs = []
+    
+    if path.endswith('.json'):
+        # Single JSON file with list of objects
+        with open(path, 'r', encoding='utf-8', errors='ignore') as f:
+            data = json.load(f)
+            if isinstance(data, list):
+                for item in data:
+                    word = item.get('word') or item.get('text') or item.get('phrase') or ''
+                    emotion = item.get('emotion') or item.get('valence') or item.get('score') or 0.0
+                    if word:
+                        pairs.append((str(word).strip(), float(emotion)))
+            elif isinstance(data, dict):
+                # Dictionary format: {"word1": score1, "word2": score2, ...}
+                for word, emotion in data.items():
+                    pairs.append((str(word).strip(), float(emotion)))
+    
+    elif path.endswith('.jsonl'):
+        # JSONL format: one JSON object per line
+        with open(path, 'r', encoding='utf-8', errors='ignore') as f:
+            for line in f:
+                if not line.strip():
+                    continue
+                try:
+                    obj = json.loads(line)
+                    word = obj.get('word') or obj.get('text') or obj.get('phrase') or ''
+                    emotion = obj.get('emotion') or obj.get('valence') or obj.get('score') or 0.0
+                    if word:
+                        pairs.append((str(word).strip(), float(emotion)))
+                except Exception:
+                    continue
+    
+    else:
+        # TSV/CSV format: word<TAB>emotion or word<COMMA>emotion
+        import csv
+        delimiter = '\t'  # Try tab first
+        with open(path, 'r', encoding='utf-8', errors='ignore') as f:
+            # Detect delimiter
+            first_line = f.readline()
+            f.seek(0)
+            if ',' in first_line and '\t' not in first_line:
+                delimiter = ','
+            
+            reader = csv.reader(f, delimiter=delimiter)
+            for row in reader:
+                if not row or len(row) < 2:
+                    continue
+                word = row[0].strip()
+                if not word:
+                    continue
+                try:
+                    emotion = float(row[1])
+                    pairs.append((word, emotion))
+                except (ValueError, IndexError):
+                    continue
+    
+    # Clamp emotion scores to valid range
+    pairs = [(word, max(-1.0, min(1.0, emotion))) for word, emotion in pairs]
+    
+    return pairs
+
+
 # -----------------------------
 # Cycle Scheduler (LIDA-like), World Model (prediction error), Drives
 # -----------------------------
@@ -1531,14 +1777,15 @@ class QAEngine:
     def answer(self, query: str) -> str:
         """
         Enhanced answer generation with semantic query embeddings.
+        Generates a flexible response based on relevant memories without hard-coding.
         """
         # Generate query embedding (LLM-inspired)
         query_emb = self.embedder.embed_query(query)
         
         # 1) Retrieve from STM/LTM with enhanced matching
-        recents = self.stm.recent(12)  # Increased from 8
-        ltms = self.ltm.recent(64)  # Increased from 32
-        km_stm = self._keyword_match(query, recents)[:4]  # More results
+        recents = self.stm.recent(12)
+        ltms = self.ltm.recent(64)
+        km_stm = self._keyword_match(query, recents)[:4]
         km_ltm = self._keyword_match(query, ltms)[:6]
         
         # 2) Attention focus with semantic query
@@ -1546,49 +1793,73 @@ class QAEngine:
         f_ltm = self.ltm.focus(query_emb, top_k=4, use_embedder=True)
         f = f_stm + f_ltm
         
-        # 3) Compose answer
-        lines = []
-        if km_stm or km_ltm:
-            lines.append("내가 기억하는 관련 내용이 있어:")
-            for m, score in (km_stm + km_ltm)[:8]:  # Limit total
-                if score <= 0.1: continue  # Threshold
-                mood = "긍정" if m.emotion_score >= 0 else "부정"
-                lines.append(f"- ({mood}, 유사도:{score:.2f}) {m.content}")
+        # 3) Merge and deduplicate results
+        seen_content = set()
+        relevant_memories = []
         
-        if f:
-            lines.append("\n집중해본 결과 떠오른 포인트:")
-            for m in f[:5]:  # Limit
-                mood = "긍정" if m.emotion_score >= 0 else "부정"
-                lines.append(f"- ({mood}) {m.content}")
+        # Add keyword matches first (they have scores)
+        for m, score in km_stm + km_ltm:
+            if score > 0.1 and m.content not in seen_content:
+                seen_content.add(m.content)
+                relevant_memories.append((m, score))
         
-        nar = self.narr.build(self.ltm.recent(8))
-        if not lines:
-            lines.append("아직 직접적인 기억은 부족하지만, 지금까지의 맥락을 바탕으로 답해볼게.")
+        # Add focus results (avoid duplicates)
+        for m in f:
+            if m.content not in seen_content:
+                seen_content.add(m.content)
+                estimated_score = abs(m.emotion_score) * 0.8
+                relevant_memories.append((m, estimated_score))
         
-        lines.append("\n나의 현재 자기서사 요약:")
-        lines.append(nar)
-        return "\n".join(lines)
+        # Sort by score (highest first)
+        relevant_memories.sort(key=lambda x: x[1], reverse=True)
+        
+        # 4) Generate response based on context
+        if relevant_memories:
+            # Use top relevant memories to form response
+            top_memories = [m for m, _ in relevant_memories[:3]]  # Top 3 most relevant
+            
+            # Form response from memories - let the content speak for itself
+            if len(top_memories) == 1:
+                return top_memories[0].content
+            else:
+                # Multiple relevant memories - combine or use most relevant
+                return top_memories[0].content
+        else:
+            # No relevant memories found - echo back the query as acknowledgment
+            return query
 
 
 class AGIAgent:
     def __init__(self, embedding_dim: int = 64, use_multihead: bool = True,
-                 use_physiological_emotion: bool = True):
+                 use_physiological_emotion: bool = False, use_pure_cognitive: bool = True):
         """
-        Enhanced AGI Agent with LLM-inspired architecture and physiological emotion.
+        Enhanced AGI Agent with LLM-inspired architecture.
         
         Args:
             embedding_dim: Dimension of text embeddings (default 64)
             use_multihead: Whether to use multi-head attention (default True)
-            use_physiological_emotion: Use physiologically-grounded emotion (default True)
-                                     If False, uses legacy AdaptiveEmotionEvaluator
+            use_physiological_emotion: Use physiologically-grounded emotion (default False)
+                                     Simulates bodily states (heart rate, stress, etc.)
+            use_pure_cognitive: Use pure cognitive emotion (default True)
+                              Consciousness from cognitive processes alone, no physiology
+                              Based on Buddhist philosophy: consciousness without sensory gates
         """
         self.gw = GlobalWorkspace()
         
         # Shared embedder for consistency (LLM-inspired)
         self.embedder = TextEmbedder(embedding_dim=embedding_dim)
         
-        # Use physiologically-grounded emotion evaluator by default
-        if use_physiological_emotion:
+        # Emotion evaluator selection
+        if use_pure_cognitive:
+            # Pure cognitive emotion - consciousness from cognition alone
+            # No physiological simulation (aligns with Buddhist 12 links philosophy)
+            self.evaluator = PureCognitiveEmotionEvaluator(
+                embedder=self.embedder, 
+                learning_rate=0.15, 
+                debug=False
+            )
+        elif use_physiological_emotion:
+            # Physiological emotion - includes bodily state simulation
             self.evaluator = PhysiologicallyGroundedEmotionEvaluator(
                 embedder=self.embedder, 
                 learning_rate=0.15, 
@@ -1662,6 +1933,78 @@ class AGIAgent:
         self.save_memory(ltm_path)
         return i
     
+    def train_word_emotion_batch(
+        self,
+        word_emotion_pairs: List[Tuple[str, float]],
+        process_text: bool = True,
+        epochs: int = 1,
+        save_every: int = 500,
+        lexicon_path: str = 'lexicon.json',
+        ltm_path: str = 'ltm.json',
+    ) -> Dict[str, int]:
+        """Batch training with word-emotion pairs.
+        
+        Args:
+            word_emotion_pairs: List of (word/phrase, emotion_score) tuples where emotion_score ∈ [-1.0, 1.0]
+            process_text: If True, also process each word through process_input (creates memories)
+            epochs: Number of training passes (default: 1)
+            save_every: Save checkpoint every N items (0 to disable intermediate saves)
+            lexicon_path: Path to save lexicon
+            ltm_path: Path to save long-term memory
+        
+        Returns:
+            Dictionary with training statistics:
+            {
+                'items_processed': int,
+                'associations_learned': int,
+                'memories_created': int (if process_text=True)
+            }
+        """
+        stats = {
+            'items_processed': 0,
+            'associations_learned': 0,
+            'memories_created': 0
+        }
+        
+        initial_ltm_size = len(self.ltm.store_)
+        
+        # Count initial associations (works for both evaluator types)
+        initial_associations = 0
+        if hasattr(self.evaluator, 'appraisal') and hasattr(self.evaluator.appraisal, 'context_associations'):
+            initial_associations = len(self.evaluator.appraisal.context_associations)
+        
+        for epoch in range(max(1, epochs)):
+            for word_or_phrase, emotion_score in word_emotion_pairs:
+                # Clamp emotion score to valid range
+                emotion_score = max(-1.0, min(1.0, float(emotion_score)))
+                
+                # Optionally process text to create memories
+                if process_text:
+                    self.process_input(word_or_phrase)
+                
+                # Learn emotion association
+                self.feedback(word_or_phrase, emotion_score, debug=False)
+                
+                stats['items_processed'] += 1
+                
+                # Periodic save
+                if save_every > 0 and stats['items_processed'] % save_every == 0:
+                    self.save_lexicon(lexicon_path)
+                    self.save_memory(ltm_path)
+                    TRACE.p("WordEmotionBatch.autosave", items=stats['items_processed'])
+        
+        # Calculate final statistics
+        stats['memories_created'] = len(self.ltm.store_) - initial_ltm_size
+        if hasattr(self.evaluator, 'appraisal') and hasattr(self.evaluator.appraisal, 'context_associations'):
+            stats['associations_learned'] = len(self.evaluator.appraisal.context_associations) - initial_associations
+        else:
+            stats['associations_learned'] = stats['items_processed']  # Approximation
+        
+        # Final save
+        self.save_lexicon(lexicon_path)
+        self.save_memory(ltm_path)
+        
+        return stats
 
     def enable_tracing(self, flag: bool = True):
         set_trace(flag)
@@ -1840,143 +2183,48 @@ class AGIAgent:
 
     def related_tokens(self, token: str, k: int = 5) -> List[Tuple[str, float]]:
         return self.mapper.related(token, top_k=k)
-
-
-# -----------------------------
-# Demo / Simulation
-# -----------------------------
-# -----------------------------
-async def demo():
-    agent = AGIAgent()
-    agent.enable_tracing(False)  # turn off mid-process prints for clean output
-
-    # Optionally load previous state
-    # agent.load_lexicon('lexicon.json')
-    # agent.load_memory('ltm.json')
-
-    # Words and general sentences mixed
-    inputs = [
-        "사과",
-        "기뻤어",
-        "나는 오늘 사과를 먹었어. 맛있었어!",
-        "비가 와서 우울했어? 짜증나…",
-        ["여행", "행복", "친구와 화해"],
-        "I enjoyed the walk and felt happy.",
-    ]
-
-    print("=== AGI CONSCIOUSNESS SIMULATION ===")
-    print("Processing inputs and building consciousness...")
     
-    # Process all inputs
-    for data in inputs:
-        outs = agent.process(data)
-        await asyncio.sleep(0.01)
-
-    # Teacher feedback
-    agent.feedback("행복했어", +1.0, debug=False)
-    agent.feedback("짜증나", -1.0, debug=False)
-
-    # Save learned lexicon and LTM memory
-    agent.save_lexicon('lexicon.json')
-    agent.save_memory('ltm.json')
-
-    # Default Mode Loop
-    for _ in range(2):
-        d = agent.default_mode_step()
-        await asyncio.sleep(0.01)
-
-    # Final Results
-    print("\n=== FINAL CONSCIOUSNESS STATE ===")
-    q = [5.0, 0.9]
-    focus = agent.stm.focus(q, top_k=3) + agent.ltm.focus(q, top_k=2)
-    narrative = agent.narr.build(agent.ltm.recent())
-    
-    print(f"Consciousness Maturity: {agent.maturity.score():.2f}")
-    print(f"Active Focus Items: {len(focus)}")
-    print(f"Long-term Memories: {len(agent.ltm.store_)}")
-    print(f"Short-term Memories: {len(agent.stm.buf)}")
-    
-    print("\n=== SELF-NARRATIVE ===")
-    print(narrative)
-    
-    print("\n=== RELATED CONCEPTS ===")
-    related = agent.related_tokens('사과')
-    if related:
-        print("Concepts related to '사과':")
-        for concept, weight in related:
-            print(f"  - {concept} (strength: {weight:.2f})")
-    else:
-        print("No related concepts found for '사과'")
-    
-    print("\n=== SIMULATION COMPLETE ===")
-
-
-async def demo2_long(epochs: int = 8, steps: int = 200, sleep: float = 0.0):
-    import random, asyncio as _asyncio
-    agent = AGIAgent()
-    agent.enable_tracing(False)
-
-    print("=== PARENT–BABY CAREGIVER DEMO (Long Session) ===")
-    # caregiver curriculum (repetitive & simple)
-    lessons: List[Tuple[str, float]] = [
-        ("안전은 중요해. 뜨거운 것은 만지면 아야 해.", -0.8),
-        ("엄마가 안아줄게. 따뜻하고 안전해.", +1.0),
-        ("배고프면 밥을 먹어야 해.", +0.8),
-        ("물건을 던지면 위험해. 조심히 내려놓자.", -0.6),
-        ("잘했어! '고마워'라고 말해보자.", +0.9),
-        ("슬프면 울어도 괜찮아. 숨을 크게 쉬어보자.", +0.6),
-    ]
-
-    # repeat caregiver lessons to stabilize associations
-    agent.caregiver_session(
-        phrases=lessons,
-        epochs=max(1, epochs),
-        shuffle=True,
-        autosave_every=0,
-        lexicon_path='lexicon.json',
-        ltm_path='ltm.json',
-        sleep_s=0.0,
-    )
-
-    # action→reaction pool (will be sampled WITH replacement = duplicates)
-    episode_pool: List[Tuple[str, float]] = [
-        ("응애… (울음)", +0.5),
-        ("배고파", +0.8),
-        ("손이 뜨거워!", -0.9),
-        ("장난감 던졌어", -0.6),
-        ("고마워", +0.9),
-        ("하이파이브!", +0.7),
-        ("무서워", -0.7),
-        ("졸려", +0.3),
-        ("아야", -0.8),
-        ("더 놀고 싶어", +0.4),
-    ]
-
-    # Build a long sequence with duplicates
-    interactions: List[Tuple[str, float]] = [random.choice(episode_pool) for _ in range(max(steps, 1))]
-
-    print("\n--- Episodes: call & reaction (long sequence) ---")
-    for utter, val in interactions:
-        agent.process(utter)
-        agent.feedback(utter, val, debug=False)  # reinforce the association
-        reply = agent.chat_once(utter)
-        print(f"baby> {utter}")
-        print("parent>", reply.split("\n")[0])
-        await _asyncio.sleep(max(0.0, sleep))
-
-    agent.save_lexicon('lexicon.json')
-    agent.save_memory('ltm.json')
-
-    print("\n=== DEMO2-LONG SUMMARY ===")
-    print(f"maturity={agent.maturity.score():.2f} | LTM={len(agent.ltm.store_)} | STM={len(agent.stm.buf)}")
-
+    def reset_memory(self, clear_emotion: bool = False):
+        """
+        Clear STM and LTM to start learning from the beginning.
+        
+        Args:
+            clear_emotion: If True, also clears learned emotion associations
+        """
+        # Clear STM
+        self.stm.buf.clear()
+        
+        # Clear LTM
+        self.ltm.store_.clear()
+        
+        # Clear emotion associations if requested
+        if clear_emotion and hasattr(self.evaluator, 'appraisal'):
+            if hasattr(self.evaluator.appraisal, 'context_associations'):
+                self.evaluator.appraisal.context_associations.clear()
+        
+        # Reset physiological state if using physiological emotion
+        if hasattr(self.evaluator, 'physiology'):
+            self.evaluator.physiology = PhysiologicalState()
+        
+        # Clear relational mapper
+        self.mapper = RelationalMapper()
+        
+        # Reset narrative builder
+        self.narr = SelfNarrativeBuilder()
+        
+        # Reset world model
+        self.world = WorldModel(k=5)
+        
+        # Reset maturity monitor
+        self.maturity = MaturationMonitor()
+        
+        TRACE.p("Agent.reset_memory", clear_emotion=clear_emotion)
 
 
 if __name__ == "__main__":
     import argparse, csv
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--demo", action="store_true", help="run built-in demo")
     parser.add_argument("--ingest", type=str, help="path to .txt/.jsonl file or directory for continuous learning")
     parser.add_argument("--autosupervise", action="store_true", help="enable weak labels during ingestion")
     parser.add_argument("--labels", type=str, help="TSV file: text<TAB>valence (-1..1)")
@@ -1989,44 +2237,33 @@ if __name__ == "__main__":
     parser.add_argument("--caregiver-shuffle", action="store_true")
     parser.add_argument("--caregiver-sleep", type=float, default=0.0)
 
-    parser.add_argument("--demo2-long", action="store_true",
-                        help="run long caregiver demo with many duplicate interactions")
-    parser.add_argument("--demo2-epochs", type=int, default=8,
-                        help="caregiver repetition epochs (demo2 & long)")
-    parser.add_argument("--demo2-steps", type=int, default=200,
-                        help="# of baby-parent interaction turns (long)")
-    parser.add_argument("--demo2-sleep", type=float, default=0.0,
-                        help="sleep seconds between turns (demo2 & long)")
+    parser.add_argument("--word-emotion-file", type=str, help="File with word-emotion pairs (TSV/CSV/JSON/JSONL): word<TAB>emotion")
+    parser.add_argument("--word-emotion-epochs", type=int, default=1, help="Number of training epochs for word-emotion batch")
+    parser.add_argument("--word-emotion-save-every", type=int, default=500, help="Save checkpoint every N items")
+    parser.add_argument("--word-emotion-no-process", action="store_true", help="Don't process text through memory (only learn associations)")
 
+    parser.add_argument("--gui", action="store_true", help="launch GUI interface")
+    
 
     
     args = parser.parse_args()
 
-    if args.demo:
-        # run demo
+    if args.gui:
+        # Launch GUI
         try:
-            asyncio.run(demo())
+            import tkinter
+            from agi_gui import main as gui_main
+            gui_main()
+        except ImportError as e:
+            print(f"[ERROR] GUI not available: {e}")
+            print("Make sure agi_gui.py is in the same directory.")
+            input("Press Enter to exit...")
         except Exception as e:
             import traceback
-            print("[ERROR] Program crashed:")
+            print("[ERROR] Failed to launch GUI:")
             traceback.print_exc()
             input("Press Enter to exit...")
-
-    elif args.demo2_long:
-        try:
-            asyncio.run(demo2_long(
-                epochs=args.demo2_epochs,
-                steps=args.demo2_steps,
-                sleep=args.demo2_sleep
-            ))
-        except Exception:
-            import traceback
-            print("\n[ERROR] Program crashed:\n")
-            traceback.print_exc()
-            input("\nPress Enter to exit...")
-
-
-
+    
     elif args.chat:
         agent = AGIAgent()
         agent.enable_tracing(False)  # clean output
@@ -2108,12 +2345,61 @@ if __name__ == "__main__":
         )
         print("[Done] Ingestion completed and state saved (lexicon.json, ltm.json)")
     
-    else:
-        # Default: run demo if no specific mode selected
+    elif args.word_emotion_file:
+        # Word-emotion batch training
+        agent = AGIAgent()
+        if args.trace:
+            agent.enable_tracing(True)
+        # Load existing state if present
+        agent.load_lexicon('lexicon.json')
+        agent.load_memory('ltm.json')
+        
+        print(f"=== WORD-EMOTION BATCH TRAINING ===")
+        print(f"Loading word-emotion pairs from: {args.word_emotion_file}")
+        
         try:
-            asyncio.run(demo())
-        except Exception as e:
+            pairs = load_word_emotion_pairs(args.word_emotion_file)
+            print(f"Loaded {len(pairs)} word-emotion pairs")
+            
+            if len(pairs) == 0:
+                print("[ERROR] No valid word-emotion pairs found in file")
+                input("Press Enter to exit...")
+            else:
+                # Show sample
+                print("\nSample pairs (first 5):")
+                for word, emotion in pairs[:5]:
+                    print(f"  '{word}' → {emotion:+.2f}")
+                if len(pairs) > 5:
+                    print(f"  ... and {len(pairs) - 5} more")
+                
+                print(f"\nStarting training (epochs={args.word_emotion_epochs}, process_text={not args.word_emotion_no_process})...")
+                
+                stats = agent.train_word_emotion_batch(
+                    word_emotion_pairs=pairs,
+                    process_text=not args.word_emotion_no_process,
+                    epochs=args.word_emotion_epochs,
+                    save_every=args.word_emotion_save_every,
+                    lexicon_path='lexicon.json',
+                    ltm_path='ltm.json',
+                )
+                
+                print("\n=== TRAINING COMPLETE ===")
+                print(f"Items processed: {stats['items_processed']}")
+                print(f"Associations learned: {stats['associations_learned']}")
+                print(f"Memories created: {stats['memories_created']}")
+                print(f"State saved to: lexicon.json, ltm.json")
+                
+        except FileNotFoundError:
+            print(f"[ERROR] File not found: {args.word_emotion_file}")
             import traceback
-            print("[ERROR] Program crashed:")
             traceback.print_exc()
             input("Press Enter to exit...")
+        except Exception as e:
+            import traceback
+            print(f"[ERROR] Failed to process word-emotion file:")
+            traceback.print_exc()
+            input("Press Enter to exit...")
+    
+    else:
+        # No mode specified - show help
+        parser.print_help()
